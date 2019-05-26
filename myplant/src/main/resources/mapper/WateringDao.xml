@@ -1,0 +1,29 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zjn.myplant.dao.WateringDao">
+<!-- 	int newWatering(int deviceId, int plantId, int waterVolume, Date waterTime);
+ -->
+ <insert id="newWatering">
+ insert ignore into watering(device_id,serial,water_volume,water_time)
+ values (#{deviceId},#{serial},#{waterVolume},#{waterTime})
+ </insert>
+ <!-- 	List<Watering> queryByDeviceId(int deviceId);
+  -->
+  <select id="queryByDeviceId" resultType="Watering" parameterType="int">
+  select device_id,serial,water_volume,water_time
+  from watering
+  where device_id=#{deviceId}
+  order by water_time desc
+  </select>
+  
+  <!-- Watering queryLastTimeWater(@Param("deviceId")int deviceId, @Param("serial")int serial);
+   -->
+   <select id="queryLastTimeWater" resultType="Watering">
+   select device_id,serial,water_volume,water_time
+   from watering
+   where device_id=#{deviceId} and serial=#{serial}
+   order by water_time desc
+   limit 1
+   </select>
+</mapper>

@@ -1,0 +1,45 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zjn.myplant.dao.MaxmoistureDao">
+<!-- int newMaxmoisture(@Param("soilQuality")int soilQuality, @Param("name")String name, @Param("maxMoisture")double maxMoisture, @Param("soilQualityName")String soilQualityName);
+ -->
+ <insert id="newMaxmoisture">
+ insert ignore into maxmoisture(soil_quality,name,max_moisture,soil_quality_name)
+ values (#{soilQuality},#{name},#{maxMoisture},#{soilQualityName})
+ </insert>
+ 
+ <!-- List<Maxmoisture> queryAll(); -->
+ <select id="queryAll">
+ select soil_quality,name,max_moisture,soil_id,soil_quality_name
+ from maxmoisture
+ </select>
+ 
+ <!-- int deleteMaxmoisture(@Param("soilId")int soilId); -->
+ <delete id="deleteMaxmoisture" parameterType="int">
+ delete
+ from maxmoisture
+ where soil_id=#{soilId}
+ </delete>
+ 
+ <!-- double queryMaxMoisture(@Param("soilQuality")int soilQuality); -->
+ <select id="queryMaxMoisture" parameterType="int" resultType="double">
+ select max_moisture
+ from maxmoisture
+ where soil_id=#{soilId}
+ </select>
+ 
+ <!-- Maxmoisture queryById(@Param("soilId")int soilId); -->
+ <select id="queryById" resultType="Maxmoisture">
+ select *
+ from maxmoisture
+ where soil_id=#{soilId}
+ </select>
+ 
+ <!-- String queryName(@Param("soilId")int soilId); -->
+ <select id="queryName" resultType="String">
+ select name
+ from maxmoisture
+ where soil_id=#{soilId}
+ </select>
+</mapper>

@@ -1,0 +1,55 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zjn.myplant.dao.PlantDao">
+<!-- 	int newPlant(String plantName, double temperatureMin, double temperatureMax, double moistureMin, double moistureMax);
+ -->
+ <insert id="newPlant" useGeneratedKeys="true">
+ insert ignore into plant(plant_name,temperature_min,temperature_max,moisture_min,moisture_max,flower_language,maintenance_knowledge,water_preference)
+ values (#{plantName},#{temperatureMin},#{temperatureMax},#{moistureMin},#{moistureMax},#{flowerLanguage},#{maintenanceKnowledge},#{waterPreference})
+ </insert>
+ <!-- 	Plant queryById(int plantId);
+  -->
+  <select id="queryById" resultType="Plant" parameterType="int">
+  select plant_id,plant_name,temperature_min,temperature_max,moisture_min,moisture_max,flower_language,maintenance_knowledge,water_preference
+  from plant
+  where plant_id=#{plantId}
+  order by plant_id
+  </select>
+  
+  <!-- 	Plant queryByName(String plantName);
+   -->
+   <select id="queryByName" resultType="Plant" parameterType="String">
+   select plant_id,plant_name,temperature_min,temperature_max,moisture_min,moisture_max,flower_language,maintenance_knowledge,water_preference
+   from plant
+   where plant_name=#{plantName}
+   </select>
+   
+   <!-- //查询全部植物信息
+	List<Plant> queryAll(); -->
+	<select id="queryAll" resultType="Plant">
+	select plant_id,plant_name,temperature_min,temperature_max,moisture_min,moisture_max,flower_language,maintenance_knowledge,water_preference
+	from plant
+	</select>
+	
+	<!-- //删除植物
+	int deletePlant(int plantId); -->
+	<delete id="deletePlant">
+	delete
+	from plant
+	where plant_id=#{plantId}
+	</delete>
+	
+	<!-- //更新信息
+	int updatePlant(@Param("plantId")int plantId, @Param("plantName")String plantName, 
+			@Param("temperatureMin")double temperatureMin,
+			@Param("temperatureMax")double temperatureMax, @Param("moistureMin")double moistureMin,
+			@Param("moistureMax")double moistureMax, @Param("flowerLanguage")String flowerLanguage,
+			@Param("maintenanceKnowledge")String maintenanceKnowledge);
+	 -->
+	 <update id="updatePlant">
+	 update plant
+	 set plant_name=#{plantName},temperature_min=#{temperatureMin},temperature_max=#{temperatureMax},moisture_min=#{moistureMin},moisture_max=#{moistureMax},flower_language=#{flowerLanguage},maintenance_knowledge=#{maintenanceKnowledge},water_preference=#{waterPreference}
+	 where plant_id=#{plantId}
+	 </update>
+</mapper>

@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zjn.myplant.dao.CultivationDao">
+
+<!-- int newCultivation(@Param("deviceId")int deviceId, @Param("serial")int serial, 
+			@Param("userId")int userId, @Param("plantId")int plantId, 
+			@Param("potHeight")double potHeight, @Param("potDiameter")double potDiameter,
+			@Param("soilId")int soilId,
+			@Param("cultivationName")String cultivationName, @Param("plantHeight")double plantHeight,
+			@Param("soilArea")int soilArea);
+ -->
+
+<insert id="newCultivation">
+ insert ignore into cultivation (device_id,serial,user_id,plant_id,pot_height,pot_diameter,soil_id,cultivation_name,plant_height,soil_area)
+ values (#{deviceId},#{serial},#{userId},#{plantId},#{potHeight},#{potDiameter},#{soilId},#{cultivationName},#{plantHeight},#{soilArea})
+ </insert>
+ 
+ <!-- 	Cultivation queryBySerial(@Param("deviceId")int deviceId, @Param("serial")int serial);
+  -->
+ <select id="queryBySerial" resultType="Cultivation">
+  select device_id,serial,user_id,plant_id,pot_height,pot_diameter,soil_id,cultivation_name,plant_height,soil_area
+  from cultivation
+  where device_id=#{deviceId} and serial=#{serial}
+  </select>
+  
+  
+  <!-- 	List<Cultivation> queryByUserId(int userId);
+   -->
+   <select id="queryByUserId" resultType="Cultivation">
+   select device_id,serial,user_id,plant_id,pot_height,pot_diameter,soil_id,cultivation_name,plant_height,soil_area
+   from cultivation
+   where user_id=#{userId}
+   </select>
+   
+   <!-- int updateCultivation(@Param("deviceId")int deviceId, @Param("serial")int serial, 
+			@Param("userId")int userId, @Param("plantId")int plantId, 
+			@Param("potHeight")double potHeight, @Param("potDiameter")double potDiameter,
+			@Param("soilId")int soilId,
+			@Param("cultivationName")String cultivationName, @Param("plantHeight")double plantHeight,
+			@Param("soilArea")int soilArea);
+	 -->
+	<update id="updateCultivation">
+	update cultivation
+	set plant_id=#{plantId},pot_height=#{potHeight},pot_diameter=#{potDiameter},soil_id=#{soilId},cultivation_name=#{cultivationName},plant_height=#{plantHeight},soil_area=#{soilArea}
+	where device_id=#{deviceId} and serial=#{serial}
+	</update>
+	
+	<!-- 	List<Cultivation> queryAll();
+	 -->
+	 <select id="queryAll" resultType="Cultivation">
+	 select *
+	 from cultivation
+	 </select>
+	 
+	 <!-- int deleteCultivation(@Param("deviceId")int deviceId, @Param("serial")int serial); -->
+	 <delete id="deleteCultivation">
+	 delete
+	 from cultivation
+	 where device_id=#{deviceId} and serial=#{serial}
+	 </delete>
+ 
+ 
+</mapper>

@@ -1,0 +1,52 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zjn.myplant.dao.DeviceDao">
+<!-- 	int newDevice(int plantId, int userId);
+ -->
+ <insert id="newDevice" useGeneratedKeys="false">
+ insert ignore into device(device_id,user_id,number)
+ values (#{deviceId},#{userId},#{number})
+ </insert>
+ <!-- 	Device queryById(int deviceId);
+  -->
+  <select id="queryById" resultType="Device" parameterType="int">
+  select device_id,user_id,number
+  from device
+  where device_id=#{deviceId}
+  order by device_id
+  </select>
+  
+  <!-- //增加占用的串口数
+	int increaseDeviceNumber(int deviceId); -->
+	<update id="increaseDeviceNumber" parameterType="int">
+	update device
+	set number=number+1
+	where device_id=#{deviceId}
+	</update>
+	
+	<!-- //减少占用的串口数
+	int decreaseDeviceNumber(int deviceId); -->
+	<update id="decreaseDeviceNumber" parameterType="int">
+	update device
+	set number=number-1
+	where device_id=#{deviceId}
+	</update>
+	
+	<!-- //查询所有设备
+	List<Device> queryAll(); -->
+	<select id="queryAll" resultType="Device">
+	select device_id,user_id,number
+	from device
+	</select>
+	<!-- //更新设备状态
+	int updateUser(int deviceId); -->
+	<update id="updateUser" parameterType="int">
+	update device
+	set user_id=0
+	where device_id=#{deviceId}
+	</update>
+  
+  
+   
+</mapper>

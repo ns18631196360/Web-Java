@@ -1,0 +1,22 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zjn.myplant.dao.MoistureDao">
+
+<!-- double queryLastDayMoisture(@Param("deviceId")int deviceId, @Param("serial")int serial);
+ -->
+ <select id="queryLastDayMoisture" resultType="double">
+  select soil_moisture
+  from moisture
+  where device_id=#{deviceId} and serial=#{serial}
+  order by time desc
+  limit 1
+  </select>
+  
+  <!-- void insertMoisture(@Param("deviceId")int deviceId, @Param("serial")int serial, @Param("soilMoisture")double soilMoisture, @Param("time")Date time);
+   -->
+   <insert id="insertMoisture">
+   insert ignore into moisture(device_id,serial,soil_moisture,time)
+   values (#{deviceId},#{serial},#{soilMoisture},#{time})
+   </insert>
+ </mapper>
